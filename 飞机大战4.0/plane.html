@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body,html{
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 320px;
+				height: 568px;
+				position: absolute;
+				left: 50%;
+				margin-left: -160px;
+				top: 30px;
+				overflow: hidden;
+			}
+			#box #point{
+				font-size: 20px;
+				position: absolute;
+				left: 10px;
+				top: 10px;
+				display: block;
+				width: 150px;
+				height: 20px;
+				color: white;
+				z-index: 100;
+			}
+			#box #pause{
+				width: 100px;
+				height: 20px;
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				font-size: 16px;
+				display: none;
+				text-align: center;
+				line-height: 20px;
+				color: white;
+				z-index: 100;
+			}
+			#weapon{
+				width: 100px;
+				height: 20px;
+				position: absolute;
+				bottom: 10px;
+				left: 20px;
+				font-size: 16px;
+				display: none;
+				line-height: 20px;
+				color: white;
+				z-index: 100;
+			}
+			#level{
+				width: 120px;
+				height: 20px;
+				position: absolute;
+				bottom: 10px;
+				right: 20px;
+				font-size: 16px;
+				display: none;
+				line-height: 20px;
+				color: white;
+				z-index: 100;
+			}
+			#startbg{
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 120;
+			}
+			#startbg button{
+				width: 200px;
+				height: 30px;
+				position: absolute;
+				top: 450px;
+				left: 50%;
+				margin-left: -100px;
+				border: 1px solid #eee;
+				border-radius: 5px;
+				color: #222;
+			}
+			#playbg {
+				width: 320px;
+				height: 568px;
+				display: none;
+				background: url(image/background_1.png);
+			}
+			#tip{
+				width : 200px;
+				height : 100px;
+				position : absolute;
+				left : 60px;
+				top : 215px;
+				background : #ddd;
+				border-radius : 5px;
+				border : 1px solid white;
+				font-size : 20px;
+				line-height : 50px;
+				text-align : center;
+				display: none;
+				z-index: 110;
+			}
+			#score{
+				width: 290px;
+				height: 30px;
+				position: absolute;
+				left: 50%;
+				top: 610px;
+				margin-left: -160px;
+				line-height: 30px;
+				text-align: center;
+			}
+			
+		</style>
+		<script>
+			window.onload = function(){
+				var obox = document.getElementById("box");
+				var btn = document.getElementById("startbtn");
+				var startbg = document.getElementById("startbg");
+				var playbg = document.getElementById("playbg");
+				var oPoint = document.getElementById("point");
+				var oPause = document.getElementById("pause");
+				var oWeapon = document.getElementById("weapon");
+				var oLevel = document.getElementById("level");
+				var myPlane;
+				var backgroundSpeed = 10; //背景移动速度（飞机速度）
+				var bulletSpeed = 15; //子弹速度
+				var bulletFreq = 3; //产生子弹的频率（即每隔一定时间产生的数量多少，值越小数量越多）
+				var enemySpeed = 5; //敌机速度
+				var speed = 80; //游戏速度
+				var arrBullet = new Array(); //装子弹的数组
+				var arrEnemy = new Array(); //装敌机的数组
+				var start; //游戏定时器
+				var pointNum=0; // 记分器
+				var arrBuff = new Array(); //装buff的数组
+				var buff_freq = 50; //buff概率（取值0~100，越大概率越高）
+				var buffLevel = 0; //buff等级
+				var bufftime = 80;//buff持续时间
+				var levelpoint = 0;//难度等级
+				var sEnemyNum = 100; //小飞机数量
+				var mEnemyNum = 20; //中飞机数量
+				var bEnemyNum = 20; //大飞机数量
+				var pause = false; // 暂停判断
+				var over = false; //结束判断
+				var arrEnemyBullet = new Array();//敌机子弹数组
+				
+				btn.onclick = function(){
+					startbg.style.display = "none";
+					playbg.style.display = "block";
+					MyPlane();
+				}
+				
+				function startGame(){
+					//游戏数据初始化
+					bulletSpeed = 15;
+					bulletFreq = 3;
+					enemySpeed = 5;
+					speed = 80;
+					pointNum=0;
+					buff_freq = 50;
+					buffLevel = 0;
+					bufftime = 80;
+					levelpoint = 0;
+					sEnemyNum = 100;
+					mEnemyNum = 20;
+					bEnemyNum = 20;
+					pause = false;
+					over = false;
+					arrBullet = [];
+					arrEnemy = [];
+					arrEnemyBullet = [];
+					arrBuff = [];
+					//开始
+					var count = 0;
+					start = setInterval(function(){
+						if(!pause){
+							//让背景图动起来
+							playbg.style.backgroundPositionY = backgroundSpeed + "px";
+							backgroundSpeed += 5;
+							//碰撞
+							Crash();
+							//产生子弹
+							count++;
+							if(count%bulletFreq==0){
+								createBullet();
+							}
+							if(count%15==0){
+								enemyBullet();
+							}
+							//子弹运动
+							moveBullet();
+							moveEnemyBullet();//敌机子弹
+							//产生小敌机
+							if(Math.round(Math.random()*1000)<=sEnemyNum){
+								createEnemy1();
+							}
+							//产生中敌机
+							if(Math.round(Math.random()*1000)<=mEnemyNum){
+								createEnemy2();
+							}
+							//产生大敌机
+							if(Math.round(Math.random()*1000)<=bEnemyNum){
+								createEnemy3();
+							}
+							//敌机运动
+							moveEnemy();
+							//射击
+							Shoot();
+							enemyShoot();
+							//记分
+							oPoint.innerHTML = "分数："+ pointNum;
+							//爆炸
+							Boom();
+							//吃到buff
+							EatBuff();
+							//buff增益
+							BuffLevle();
+							//难度提升
+							LevelUp();
+							//暂停键显示
+							oPause.style.display = "block";
+							//武器等级显示
+							oWeapon.style.display = "block";
+							oWeapon.innerHTML = "武器等级："+ buffLevel;
+							//难度等级显示
+							oLevel.style.display = "block";
+							oLevel.innerHTML = "难度等级："+ levelpoint;							
+							if(!over){
+								//暂停
+								GamePause();
+							}
+						}
+					},speed);
+				}
+				
+				//创建飞机
+				function MyPlane(){
+					myPlane =  document.createElement("img");
+					myPlane.src = "image/我的飞机.gif";
+					myPlane.style.position = "absolute";
+					myPlane.style.left = (160-33)+"px";
+					myPlane.style.top = (520)+"px";
+					myPlane.style.borderRadius = "15px";
+					myPlane.style.zIndex = 50;
+					playbg.appendChild(myPlane);
+					//清除菜单
+					oPoint.innerHTML = "";
+					oPause.style.display = "none";
+					oWeapon.style.display = "none";
+					oLevel.style.display = "none";
+					//飞机出场
+					var moveIn = setInterval(function(){
+						myPlane.style.top = myPlane.offsetTop - 1 +"px";
+						console.log("飞机准备中...");
+						if(myPlane.offsetTop <= 450){
+							console.log("飞机准备就绪");
+							clearInterval(moveIn);
+							MyPlaneMove();
+							clearInterval(start);
+							pointNum = 0;
+							startGame();
+						}
+					},20);
+				}
+				
+				//飞机运动
+				function MyPlaneMove(){
+					playbg.onmousemove = function(evt){
+						var e = evt || event;
+						myPlane.style.left = e.clientX - obox.offsetLeft - myPlane.offsetWidth/2 + "px";
+						myPlane.style.top = e.clientY - obox.offsetTop - myPlane.offsetHeight/2+ "px";
+						//设置边距
+						if(myPlane.offsetLeft<=-33){
+							myPlane.style.left = -33+"px";
+						}
+						if(myPlane.offsetLeft>=obox.offsetWidth-myPlane.offsetWidth+27){
+							myPlane.style.left = obox.offsetWidth-myPlane.offsetWidth+27+"px";
+						}
+						if(myPlane.offsetTop<=0){
+							myPlane.style.top = 0;
+						}
+						if(myPlane.offsetTop>=obox.offsetHeight - myPlane.offsetHeight){
+							myPlane.style.top = obox.offsetHeight - myPlane.offsetHeight +"px";
+						}
+					}
+				}
+				
+				//产生子弹
+				function createBullet(){
+					var bullet = document.createElement("img");
+					bullet.src = "image/bullet1.png";
+					bullet.style.position = "absolute";
+					bullet.style.top = myPlane.offsetTop - bullet.offsetHeight -10 + "px";
+					bullet.style.left = myPlane.offsetLeft + myPlane.offsetWidth/2 -2+ "px";
+					playbg.appendChild(bullet);
+					arrBullet.push(bullet);
+				}
+				
+				//子弹运动
+				function moveBullet(){
+					for(var i=0;i<arrBullet.length;i++){
+						arrBullet[i].style.top = arrBullet[i].offsetTop - bulletSpeed + "px";
+						//向左运动
+						if(arrBullet[i].type == "left"){
+							arrBullet[i].style.left = arrBullet[i].offsetLeft - bulletSpeed/4 + "px";
+						}
+						//向右运动
+						if(arrBullet[i].type == "right"){
+							arrBullet[i].style.left = arrBullet[i].offsetLeft + bulletSpeed/4 + "px";
+						}
+						if(arrBullet[i].offsetTop<=-14){
+							arrBullet[i].remove();
+							arrBullet.splice(i,1);
+						}
+					}
+				}
+				
+				//产生小敌机
+				function createEnemy1(){
+					var enemyplane = document.createElement("img");
+					enemyplane.src = "image/enemy1.png";
+					enemyplane.blood = 10;
+					enemyplane.point = 10;
+					enemyplane.isboom = false;
+					enemyplane.type = 1;
+					enemyplane.boomtime = 10;
+					enemyplane.style.position = "absolute";
+					enemyplane.style.borderRadius = "5px";
+					enemyplane.style.top = "-50px";
+					enemyplane.style.left = Math.round(Math.random()*286) + "px";
+					playbg.appendChild(enemyplane);
+					arrEnemy.push(enemyplane);
+				}
+				
+				//产生中敌机
+				function createEnemy2(){
+					var enemyplane = document.createElement("img");
+					enemyplane.src = "image/enemy2.png";
+					enemyplane.blood = 30;
+					enemyplane.point = 50;
+					enemyplane.isboom = false;
+					enemyplane.type = 2;
+					enemyplane.boomtime = 10;
+					enemyplane.style.position = "absolute";
+					enemyplane.style.borderRadius = "15px";
+					enemyplane.style.top = "-60px";
+					enemyplane.style.left = Math.round(Math.random()*274) + "px";
+					playbg.appendChild(enemyplane);
+					arrEnemy.push(enemyplane);
+				}
+				
+				//产生大敌机
+				function createEnemy3(){
+					var enemyplane = document.createElement("img");
+					enemyplane.src = "image/enemy3.png";
+					enemyplane.blood = 60;
+					enemyplane.point = 100;
+					enemyplane.isboom = false;
+					enemyplane.type = 3;
+					enemyplane.boomtime = 10;
+					enemyplane.style.position = "absolute";
+					enemyplane.style.borderRadius = "25px";
+					enemyplane.style.top = "-164px";
+					enemyplane.style.left = Math.round(Math.random()*210) + "px";
+					playbg.appendChild(enemyplane);
+					arrEnemy.push(enemyplane);
+				}
+				
+				//敌机运动 
+				function moveEnemy(){
+					for(var i=0;i<arrEnemy.length;i++){
+						if(!arrEnemy[i].isboom){
+							arrEnemy[i].style.top = arrEnemy[i].offsetTop + enemySpeed + "px";
+							if(arrEnemy[i].offsetTop >= 568){ //将超出box的敌机清除
+								arrEnemy[i].remove();
+								arrEnemy.splice(i,1);
+							}
+						}
+					}
+				}
+				
+				//敌机子弹
+				function enemyBullet(){
+					for(var i=0;i<arrEnemy.length;i++){
+						if(arrEnemy[i].type==2){
+							console.log("产生子弹");
+							var bullet = document.createElement("div");
+							bullet.style.width = "6px";
+							bullet.style.height = "10px";
+							bullet.style.borderRadius = "5px";
+							bullet.style.background = "#DE5246";
+							bullet.style.position = "absolute";
+							bullet.style.top = arrEnemy[i].offsetTop + arrEnemy[i].offsetHeight +5+ "px";
+							bullet.style.left = arrEnemy[i].offsetLeft + arrEnemy[i].offsetWidth/2 + "px";
+							playbg.appendChild(bullet);
+							arrEnemyBullet.push(bullet);
+						}
+					}
+				}
+				
+				//敌机子弹运动
+				function moveEnemyBullet(){
+					for(var i=0;i<arrEnemyBullet.length;i++){
+						arrEnemyBullet[i].style.top = arrEnemyBullet[i].offsetTop + 10 + "px";
+						if(arrEnemyBullet[i].offsetTop > 568){
+							arrEnemyBullet[i].remove();
+							arrEnemyBullet.splice(i,1);
+						}
+					}
+				}
+				
+				//敌机子弹击中我方飞机
+				function enemyShoot(){
+					var myplaneX = myPlane.offsetLeft;
+					var myplaneY = myPlane.offsetTop;
+					var myplaneW = myPlane.offsetWidth;
+					var myplaneH = myPlane.offsetHeight;
+					for(var i=0;i<arrEnemyBullet.length;i++){
+						var bulletX = arrEnemyBullet[i].offsetLeft;
+						var bulletY = arrEnemyBullet[i].offsetTop;
+						var bulletH = arrEnemyBullet[i].offsetHeight;
+						var bulletW = arrEnemyBullet[i].offsetWidth;
+						if(myplaneY+myplaneH>=bulletY && myplaneY<=bulletY+bulletH && myplaneX+myplaneW-5 >= bulletX && myplaneX+5 <= bulletX + bulletW){
+							console.log("我方飞机正遭受攻击！");
+							myPlane.src = "image/本方飞机爆炸.gif";
+							GameOver();
+							clearInterval(start);
+							playbg.onmousemove = "";
+						}
+					}
+				}
+				
+				//碰撞
+				function Crash(){
+					var myplaneX = myPlane.offsetLeft;
+					var myplaneY = myPlane.offsetTop;
+					var myplaneH = myPlane.offsetHeight;
+					var myplaneW = myPlane.offsetWidth;
+					for(var i=0;i<arrEnemy.length;i++){
+						var enemyX = arrEnemy[i].offsetLeft;
+						var enemyY = arrEnemy[i].offsetTop;
+						var enemyW = arrEnemy[i].offsetWidth;
+						var enemyH = arrEnemy[i].offsetHeight;
+						if(!arrEnemy[i].isboom){ //飞机没爆炸的时候才可以发生碰撞
+							if(myplaneY+myplaneH>enemyY && myplaneY < enemyY + enemyH && myplaneX+myplaneW-5 > enemyX+5 && myplaneX+5 < enemyX + enemyW-5){
+								myPlane.src = "image/本方飞机爆炸.gif";
+								GameOver();
+								clearInterval(start);
+								playbg.onmousemove = "";
+								break;
+							}
+						}
+					}
+				}
+				
+				//击中
+				function Shoot(){
+					for(var i=0;i<arrEnemy.length;i++){
+						var enemyX = arrEnemy[i].offsetLeft;
+						var enemyY = arrEnemy[i].offsetTop;
+						var enemyW = arrEnemy[i].offsetWidth;
+						var enemyH = arrEnemy[i].offsetHeight;
+						//当前飞机不是处于爆炸状态时，可以被击中，可以爆炸
+						if(!arrEnemy[i].isboom){
+							for(var j=0;j<arrBullet.length;j++){
+								var bulletY = arrBullet[j].offsetTop;
+								var bulletX = arrBullet[j].offsetLeft;
+								var bulletH = arrBullet[j].offsetHeight;
+								var bulletW = arrBullet[j].offsetWidth;
+								if(bulletY+bulletH>=enemyY && bulletY <= enemyY+enemyH && bulletX+bulletW >= enemyX && bulletX <= enemyX+enemyW){
+									//console.log("击中了！！！");
+									arrEnemy[i].blood -= 10;
+									arrBullet[j].remove();
+									arrBullet.splice(j,1);
+									//受到攻击时修改图案样式
+									if(arrEnemy[i].type == 2){
+										arrEnemy[i].src = "image/中飞机挨打.png";
+									} else if (arrEnemy[i].type == 3){
+										arrEnemy[i].src = "image/大飞机挨打.png";
+									}
+								} 
+							}
+							//血量为零后爆炸
+							if(arrEnemy[i].blood <= 0){
+								//console.log("分数增加:"+arrEnemy[i].point);
+								pointNum += arrEnemy[i].point;
+								arrEnemy[i].isboom = true;
+								if(arrEnemy[i].type == 1){
+									arrEnemy[i].src = "image/小飞机爆炸.gif";
+								} else if (arrEnemy[i].type == 2){
+									arrEnemy[i].src = "image/中飞机爆炸.gif";
+								} else if (arrEnemy[i].type == 3){
+									arrEnemy[i].src = "image/大飞机爆炸.gif";
+								}
+							}
+							
+						}
+					}
+				}
+				
+				//爆炸时飞机不移动，并且爆炸的飞机不会再吃子弹，爆炸的时间可以动态修改
+				//爆炸消失
+				function Boom(){
+					for(var i=0;i<arrEnemy.length;i++){
+						
+						//爆炸延时
+						if(arrEnemy[i].blood <= 0){
+							arrEnemy[i].boomtime -= 1;
+							//console.log("爆炸时间减一")
+						}
+						//延时结束，敌机消失
+						if(arrEnemy[i].boomtime ==0){
+							//console.log("移除该敌机");
+								
+							//消灭大飞机概率掉落buff
+							if(arrEnemy[i].type==3){
+								if(Math.round(Math.random()*100)<=buff_freq){
+									var buff = document.createElement("div");
+									buff.style.width = "30px";
+									buff.style.height = "30px";
+									buff.style.position = "absolute";
+									buff.style.borderRadius = "100%";
+									buff.style.left = arrEnemy[i].offsetLeft + arrEnemy[i].offsetWidth/2 + "px";
+									buff.style.top = arrEnemy[i].offsetTop + arrEnemy[i].offsetHeight/2 + "px";
+									buff.style.background = "#FAB427";
+									buff.style.opacity = "0.5";
+									buff.innerHTML = "B";
+									buff.style.textAlign = "center";
+									buff.style.lineHeight = "30px";
+									buff.style.color = "white";
+									playbg.appendChild(buff);
+									arrBuff.push(buff);								
+								}
+							}
+							arrEnemy[i].remove();
+							arrEnemy.splice(i,1);
+						}
+					}
+				}
+				
+				//吃掉buff
+				function EatBuff(){
+					for(var i=0;i<arrBuff.length;i++){
+						arrBuff[i].style.top = arrBuff[i].offsetTop + 5 + "px";
+						var buffX = arrBuff[i].offsetLeft;
+						var buffY = arrBuff[i].offsetTop;
+						var buffW = arrBuff[i].offsetWidth;
+						var buffH = arrBuff[i].offsetHeight;
+						if(buffX>=myPlane.offsetLeft&&buffX<=myPlane.offsetLeft+myPlane.offsetWidth && buffY+buffH>=myPlane.offsetTop && buffY<=myPlane.offsetTop+myPlane.offsetHeight){
+							//console.log("吃到buff了！！！");
+							arrBuff[i].remove();
+							arrBuff.splice(i,1);
+							buffLevel += 1;
+							bufftime = 80;
+						}
+						if(buffY>=obox.offsetHeight){
+							arrBuff[i].remove();
+							arrBuff.splice(i,1);
+						}
+					}
+				}
+				
+				//buff增益效果
+				function BuffLevle(){
+					//buff时间调整
+					bufftime --;
+					if(bufftime==0){
+						buffLevel--;
+						buffLevel = buffLevel<=0?0:buffLevel;
+						bufftime = 80;
+					}
+					
+					if(buffLevel == 0){
+						bulletSpeed = 15;
+						bulletFreq = 3;
+					}
+					if(buffLevel == 1){
+						bulletSpeed = 25;
+						bulletFreq = 1;
+					}
+					if(buffLevel == 2){
+						var bullet3 = document.createElement("img");
+						bullet3.src = "image/bullet1.png";
+						bullet3.style.position = "absolute";
+						bullet3.style.top = myPlane.offsetTop - bullet3.offsetHeight -5 + "px";
+						bullet3.style.left = myPlane.offsetLeft + 15 + "px";
+						playbg.appendChild(bullet3);
+						arrBullet.push(bullet3);
+						var bullet4 = document.createElement("img");
+						bullet4.src = "image/bullet1.png";
+						bullet4.style.position = "absolute";
+						bullet4.style.top = myPlane.offsetTop - bullet4.offsetHeight -5 + "px";
+						bullet4.style.left = myPlane.offsetLeft + myPlane.offsetWidth/2 +15+ "px";
+						playbg.appendChild(bullet4);
+						arrBullet.push(bullet4);
+					}
+					if(buffLevel >= 3){
+						buffLevel = 3;
+						var bullet1 = document.createElement("img");
+						bullet1.src = "image/bullet1.png";
+						bullet1.style.position = "absolute";
+						bullet1.style.top = myPlane.offsetTop - bullet1.offsetHeight -5 + "px";
+						bullet1.style.left = myPlane.offsetLeft + 5 + "px";
+						bullet1.type = "left";
+						playbg.appendChild(bullet1);
+						arrBullet.push(bullet1);
+						var bullet2 = document.createElement("img");
+						bullet2.src = "image/bullet1.png";
+						bullet2.style.position = "absolute";
+						bullet2.style.top = myPlane.offsetTop - bullet2.offsetHeight -5 + "px";
+						bullet2.style.left = myPlane.offsetLeft + myPlane.offsetWidth/2 +25+ "px";
+						bullet2.type = "right";
+						playbg.appendChild(bullet2);
+						arrBullet.push(bullet2);
+					}
+					
+				}
+				
+				//难度升级
+				function LevelUp(){
+					if(pointNum>=500){
+						levelpoint = 1;
+						sEnemyNum = 110;
+						mEnemyNum = 25;
+						enemySpeed = 7;
+					} 
+					if(pointNum>=1000){
+						levelpoint = 2;
+						sEnemyNum = 120;
+						mEnemyNum = 30;
+						enemySpeed = 10;
+					}
+					if(pointNum>=1500){
+						levelpoint = 3;
+						sEnemyNum = 130;
+						mEnemyNum = 35;
+						enemySpeed = 15;
+					}
+					if(pointNum>=2000){
+						levelpoint = 4;
+						sEnemyNum = 140;
+						mEnemyNum = 55;
+						bEnemyNum = 25;
+					}
+					if(pointNum>=3000){
+						levelpoint = 5;
+						sEnemyNum = 150;
+						mEnemyNum = 60;
+					}
+					if(pointNum>=4000){
+						levelpoint = 6;
+						sEnemyNum = 150;
+						mEnemyNum = 65;
+					}
+					if(pointNum>=5000){
+						levelpoint = 7;
+						sEnemyNum = 200;
+						mEnemyNum = 70;
+						bEnemyNum = 30;
+						speed = 60;
+					}
+					if(pointNum>=6000){
+						levelpoint = 8;
+						sEnemyNum = 250;
+						mEnemyNum = 90;
+						bEnemyNum = 35;
+					}
+					if(pointNum>=7000){
+						levelpoint = 9;
+						sEnemyNum = 300;
+						mEnemyNum = 100;
+						bEnemyNum = 40;
+					}
+					if(pointNum>=8000){
+						levelpoint = 10;
+						sEnemyNum = 350;
+						mEnemyNum = 110;
+						bEnemyNum = 45;
+					}
+					if(pointNum>=10000){
+						levelpoint = 11;
+						sEnemyNum = 450;
+						mEnemyNum = 120;
+						bEnemyNum = 50;
+						speed = 50;
+					}
+					if(pointNum>=11000){
+						levelpoint = 12;
+						sEnemyNum = 500;
+						mEnemyNum = 130;
+					}
+					if(pointNum>=12000){
+						levelpoint = 13;
+						sEnemyNum = 550;
+						mEnemyNum = 140;
+					}
+					if(pointNum>=13000){
+						levelpoint = 14;
+						sEnemyNum = 600;
+						mEnemyNum = 150;
+					}
+					if(pointNum>=14000){
+						levelpoint = 15;
+						sEnemyNum = 650;
+						mEnemyNum = 160;
+					}
+					if(pointNum>=15000){
+						levelpoint = 16;
+						sEnemyNum = 650;
+						mEnemyNum = 170;
+						bEnemyNum = 55;
+					}
+					if(pointNum>=16000){
+						levelpoint = 17;
+						sEnemyNum = 700;
+						mEnemyNum = 180;
+					}
+					if(pointNum>=17000){
+						levelpoint = 18;
+						sEnemyNum = 750;
+						mEnemyNum = 190;
+					}
+					if(pointNum>=18000){
+						levelpoint = 19;
+						sEnemyNum = 800;
+						mEnemyNum = 200;
+					}
+					if(pointNum>=19000){
+						levelpoint = 20;
+						sEnemyNum = 850;
+					}
+					if(pointNum>=20000){
+						levelpoint = "英雄";
+						sEnemyNum = 900;
+						mEnemyNum = 250;
+						speed = 40;
+					}
+					if(pointNum>=30000){
+						levelpoint = "地狱";
+						sEnemyNum = 1000;
+						mEnemyNum = 500;
+						speed = 30;
+					}
+				}
+				
+				//游戏结束
+				function GameOver(){
+					var gameover_tip = document.getElementById("tip");
+					gameover_tip.style.display = "block";
+					gameover_tip.innerHTML = "游戏结束！"+"<br/>"+"得分："+pointNum;
+					var hightScore = Math.max(getCookie("hightscore"),pointNum);
+					document.cookie = "hightscore"+"="+hightScore+";expires="+new Date (2016,12,31);
+					over = true;
+					document.onkeydown = "";
+					//点击弹框可以返回主页面
+					gameover_tip.onclick = function(){
+						//window.location.reload();
+						//在不刷新页面的情况下返回主页面
+						over = false;
+						gameover_tip.style.display = "none";
+						startbg.style.display = "block";
+						playbg.innerHTML = "";
+						playbg.style.display = "none";
+					}
+				}
+				
+				//游戏暂停
+				function GamePause(){
+					document.onkeydown =function(){
+						pause = !pause;
+						var gamepause_tip = document.getElementById("tip");
+						gamepause_tip.onclick = "";
+						if(pause){
+							gamepause_tip.style.display = "block";
+							gamepause_tip.innerHTML = "游戏暂停"+"<br/>"+"按任意键继续";
+							playbg.onmousemove = "";
+						} else {
+							gamepause_tip.style.display = "none";
+							playbg.onmousemove = function(evt){
+								var e = evt || event;
+								myPlane.style.left = e.clientX - obox.offsetLeft - myPlane.offsetWidth/2 + "px";
+								myPlane.style.top = e.clientY - obox.offsetTop - myPlane.offsetHeight/2+ "px";
+								//设置边距
+								if(myPlane.offsetLeft<=-33){
+									myPlane.style.left = -33+"px";
+								}
+								if(myPlane.offsetLeft>=obox.offsetWidth-myPlane.offsetWidth+27){
+									myPlane.style.left = obox.offsetWidth-myPlane.offsetWidth+27+"px";
+								}
+								if(myPlane.offsetTop<=0){
+									myPlane.style.top = 0;
+								}
+								if(myPlane.offsetTop>=obox.offsetHeight - myPlane.offsetHeight){
+									myPlane.style.top = obox.offsetHeight - myPlane.offsetHeight +"px";
+								}
+							}
+						}
+						
+					}
+					
+				}
+				
+				//获取cookie值
+				var score = document.getElementById("score");
+				score.children[0].innerHTML = "最高分："+getCookie("hightscore");
+				function getCookie(key){
+					var str = document.cookie;
+					var list = str.split("; ");
+					for(var i in list){
+						var k = list[i].split("=")[0];
+						if(k==key){
+							return list[i].split("=")[1];
+						}
+					}
+					return "";
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div id = "box">
+			<span id="point"></span>
+			<span id="pause">按任意键暂停</span>
+			<span id="weapon"></span>
+			<span id="level"></span>
+			<div id="startbg">
+				<img src="image/开始背景.png" />
+				<button id="startbtn">开始游戏</button>
+			</div>
+			<div id="playbg"></div>
+			<div id="tip"></div>
+		</div>
+		
+		<div id="score">
+			<span>最高分：</span>
+		</div>
+	</body>
+</html>
