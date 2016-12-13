@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+		<style>
+			html,body{
+				padding:0px;
+				margin:0px;
+				width:100%;
+				height:100%;
+			}
+			#box{
+				width:200px;
+				height:200px;
+				background:skyblue;
+				position:absolute;
+				left:50px;
+				top:50px;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var box = document.getElementById("box");
+				
+				box.onmousedown = function(evt){
+					var e = evt || event;
+					var xbox = e.offsetX;  //鼠标在div中的相对位置
+					var ybox = e.offsetY;
+					console.log("鼠标按下")
+					console.log("界面高度:"+document.body.offsetHeight)
+					console.log("界面宽度:"+document.body.offsetWidth)
+					document.onmousemove = function(evt){
+						console.log("鼠标移动")
+						var e = evt || event;
+						var mousex = e.clientX; //鼠标在界面中的绝对位置
+						var mousey = e.clientY;
+						
+						if(mousex<=xbox){ //左边界
+							box.style.left = "0px";
+						} else if(mousex >= (document.body.offsetWidth - box.offsetWidth + xbox)){ //右边界
+							box.style.left = document.body.offsetWidth - box.offsetWidth + "px";
+						}else { //正常情况
+							box.style.left = mousex - xbox +"px";
+						}
+						if(mousey <= ybox){ //上边界
+							box.style.top = "0px";
+						} else if(mousey >= (document.body.offsetHeight - box.offsetHeight + ybox)){ //下边界
+							box.style.top = document.body.offsetHeight - box.offsetHeight +"px";
+							console.log("下边界:"+document.body.offsetHeight) 
+							//注意：使用offsetHight获取界面高度时要给body和html设置高度，100%；
+						} else {
+							box.style.top = mousey - ybox +"px";
+						}
+						console.log(box.style.left+","+box.style.top)
+
+					}
+				}
+				document.onmouseup = function(){
+					console.log("鼠标抬起")
+					document.onmousemove = "";
+				}
+			}
+			
+		</script>
+    </head>
+
+	<body>
+		
+			<div id="box"></div>
+		
+	</body>
+</html>
