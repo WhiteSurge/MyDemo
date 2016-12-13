@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+		<style>
+			body,ul,li{
+				padding:0px;
+				margin:0px;
+				list-style:none;
+			}
+			#box{
+				width:940px;
+				background:#eee;
+				padding:5px;
+				position:absolute;
+				left:50%;
+				top:250px;
+				margin-left:-460px;
+				border-radius:10px;
+			}
+			ul{
+				overflow:hidden;
+			}
+			li{
+				margin:5px;
+				text-align:center;
+				line-height:50px;
+				font-size:16px;
+				background:#f6f6f6;
+				border:1px solid black;
+				border-radius:5px;
+				cursor:pointer;
+				-moz-user-select:none; <!-- 火狐浏览器的阻止选中文字属性 -->
+			}
+			#line1 li,#line2 li,#line3 li,#line4 li,#line5 li{
+				float:left;
+			}
+			.small{
+				width:50px;
+				height:50px;			
+			}
+			.mid{
+				width:80px;
+				height:50px;
+			}
+			.double{
+				width:110px;
+				height:50px;
+			}
+			.max{
+				width:142px;
+				height:50px;
+			}
+			#space{
+				width:670px;
+				height:50px;
+				
+			}
+			#txt{
+				width:800px;
+				height:100px;
+				margin-left:-400px;
+				margin-top:100px;
+				font-size:24px;
+				padding:10px;
+				position:absolute;
+				left:50%;
+				border:1px solid black;
+				white-space:pre-wrap;
+				word-break:break-all;
+				overflow:auto;
+				
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var lis = document.getElementsByTagName("li");
+				var otxt = document.getElementById("txt");
+				var capsLock = false;  //设置变量控制大写锁定，初始值为false
+				var str = "";
+				
+				//设置鼠标事件
+				for(var i=0;i<lis.length;i++){
+					lis[i].onmousedown = function(){  //鼠标按下时
+						this.style.background = "#fe9f2f";  //修改背景颜色
+						//大写锁定键
+						if(this.getAttribute("name")==20){  
+							capsLock = capsLock?false:true;
+							console.log("capsLock:"+capsLock);
+							isCapsLock();
+						}
+						//显示在输入框中
+						if(!(this.getAttribute("name")>=8&&this.getAttribute("name")<=32)){ 
+							str += this.innerHTML;
+							otxt.innerHTML = str;
+						}
+						//删除键
+						if(this.getAttribute("name")==8){ 
+							str = str.substring(0,str.length-1);
+							otxt.innerHTML = str;
+						}
+						//空格键
+						if(this.getAttribute("name")==32){ 
+							str += " ";
+							otxt.innerHTML = str;
+						}
+						//回车键
+						if(this.getAttribute("name")==13){ 
+							str += "<br/>"
+							otxt.innerHTML = str;
+						}
+						//Tab键
+						if(this.getAttribute("name")==9){ 
+							str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+							otxt.innerHTML = str;
+						}
+					}					
+				}
+				document.onmouseup = function(){  //鼠标抬起时恢复背景色
+					for(var i=0;i<lis.length;i++){
+						lis[i].style.background = "#f6f6f6";
+					}
+				}
+				
+				//设置键盘事件
+				document.onkeydown = function(evt){  //键盘按下事件
+						var e = evt || event;
+						var keynum = e.keyCode || e.which; //获取按下的键值
+						console.log("按下:"+keynum);
+						//大写锁定键
+						if(keynum == 20){ 
+							capsLock = capsLock?false:true;
+							console.log("capsLock:"+capsLock);
+							isCapsLock();
+						}
+						//遍历li与键值比较
+						for(var i=0;i<lis.length;i++){  
+							if(lis[i].getAttribute("name") == keynum){
+								lis[i].style.background = "#fe9f2f";  //相同的修改背景颜色
+								//将键盘内容显示出来
+								if(!(lis[i].getAttribute("name")>=8&&lis[i].getAttribute("name")<=32)){
+									str += lis[i].innerHTML;
+									otxt.innerHTML = str;
+								}
+							}
+						}
+						//删除键
+						if(keynum == 8){ 
+							str = str.substring(0,str.length-1);
+							otxt.innerHTML = str;
+						}
+						//空格键
+						if(keynum == 32){ 
+							str += " ";
+							otxt.innerHTML = str;
+						}
+						//回车键
+						if(keynum == 13){ 
+							str += "<br/>"
+							otxt.innerHTML = str;
+						}
+						//Tab键
+						if(keynum == 9){ 
+							str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+							otxt.innerHTML = str;
+						}
+					}
+				document.onkeyup = function(){  //键盘抬起时恢复背景色
+					for(var i=0;i<lis.length;i++){
+						lis[i].style.background = "#f6f6f6";		
+					}
+				}
+				
+				//大写锁定判断函数
+				function isCapsLock(){
+					if(capsLock){
+						for(var i=0;i<lis.length;i++){
+							var wordnum = lis[i].getAttribute("name"); //获取所有字母
+							if(wordnum>=65&&wordnum<=90){
+								lis[i].innerHTML = lis[i].innerHTML.toUpperCase(); //将字母显示变成大写
+							}
+						}
+						console.log("转成大写模式");
+						
+					} else {
+						for(var i=0;i<lis.length;i++){
+							var wordnum = lis[i].getAttribute("name");
+							if(wordnum>=65&&wordnum<=90){
+								lis[i].innerHTML = lis[i].innerHTML.toLowerCase();//将所有字母变成小写
+							}
+						}
+						console.log("转成小写模式");
+					}
+				}
+				
+				//谷歌浏览器的阻止选中文字函数
+				document.onselectstart = function(){
+					return false;
+				}
+				
+
+			}
+		</script>
+    </head>
+
+	<body>
+		<div id = "txt"></div>
+		<div id="box">
+			<ul id="line1">
+				<li class="small" name="192">`</li>
+				<li class="small" name="49">1</li>
+				<li class="small" name="50">2</li>
+				<li class="small" name="51">3</li>
+				<li class="small" name="52">4</li>
+				<li class="small" name="53">5</li>
+				<li class="small" name="54">6</li>
+				<li class="small" name="55">7</li>
+				<li class="small" name="56">8</li>
+				<li class="small" name="57">9</li>
+				<li class="small" name="48">0</li>
+				<li class="small" name="189">-</li>
+				<li class="small" name="187">=</li>
+				<li class="double" name="8">←Backspace</li>
+			</ul>
+			<ul id="line2">
+				<li class="mid" name="9">Tab</li>
+				<li class="small" name="81" >q</li>
+				<li class="small" name="87" >w</li>
+				<li class="small" name="69" >e</li>
+				<li class="small" name="82" >r</li>
+				<li class="small" name="84" >t</li>
+				<li class="small" name="89" >y</li>
+				<li class="small" name="85" >u</li>
+				<li class="small" name="73" >i</li>
+				<li class="small" name="79" >o</li>
+				<li class="small" name="80" >p</li>
+				<li class="small" name="219">[</li>
+				<li class="small" name="221">]</li>
+				<li class="mid" name="220">\</li>
+			</ul>
+			<ul id="line3">
+				<li class="double" name="20">CapsLock</li>
+				<li class="small" name="65" keytype="word">a</li>
+				<li class="small" name="83" keytype="word">s</li>
+				<li class="small" name="68" keytype="word">d</li>
+				<li class="small" name="70" keytype="word">f</li>
+				<li class="small" name="71" keytype="word">g</li>
+				<li class="small" name="72" keytype="word">h</li>
+				<li class="small" name="74" keytype="word">j</li>
+				<li class="small" name="75" keytype="word">k</li>
+				<li class="small" name="76" keytype="word">l</li>
+				<li class="small" name="186">;</li>
+				<li class="small" name="222">'</li>
+				<li class="double" name="13">Enter</li>
+			</ul>
+			<ul id="line4">
+				<li class="max" name="16">Shift</li>
+				<li class="small" name="90" keytype="word">z</li>
+				<li class="small" name="88" keytype="word">x</li>
+				<li class="small" name="67" keytype="word">c</li>
+				<li class="small" name="86" keytype="word">v</li>
+				<li class="small" name="66" keytype="word">b</li>
+				<li class="small" name="78" keytype="word">n</li>
+				<li class="small" name="77" keytype="word">m</li>
+				<li class="small" name="188">,</li>
+				<li class="small" name="190">.</li>
+				<li class="small" name="191">/</li>
+				<li class="max" name="16">Shift</li>
+			</ul>
+			<ul id="line5">
+				<li class="small" name="17">Ctrl</li>
+				<li class="small" name="18">Alt</li>
+				<li id="space" name="32"></li>
+				<li class="small" name="18">Alt</li>
+				<li class="small" name="17">Ctrl</li>
+			</ul>
+		</div>
+	</body>
+</html>
