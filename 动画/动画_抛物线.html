@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body,html{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			div{
+				width: 50px;
+				height: 50px;
+				border-radius: 100%;
+				position: absolute;
+				left:0;
+				top:100px;
+				background: skyblue;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var odiv = document.getElementById("ball");
+				var speedX = 7;
+				var speedY = -10;
+				var move = setInterval(function(){
+					
+					
+					odiv.style.left = odiv.offsetLeft+speedX+"px";
+					odiv.style.top = odiv.offsetTop+speedY+"px";
+					speedY++;
+					if(odiv.offsetTop >= document.body.offsetHeight-odiv.offsetHeight){
+						
+						odiv.style.top = document.body.offsetHeight-odiv.offsetHeight+"px";
+						speedY *= -0.55;
+						if(Math.abs(speedY)<=1){
+							speedY =0;
+							if(speedX>=0){
+								speedX -= 0.15;
+							}
+						}
+					}
+					
+					
+				},30);
+				
+				
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<div id="ball"></div>
+	</body>
+</html>

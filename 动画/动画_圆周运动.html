@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body,html{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			div{
+				width: 20px;
+				height: 20px;
+				border-radius: 100%;
+				position: absolute;
+				
+				background: skyblue;
+			}
+			#ball0{
+				background: black;
+				top:300px;
+				left:500px;
+			}
+			#ball2{
+				background: yellow;
+			}
+			#ball3{
+				background: red;
+			}
+			#ball4{
+				background: greenyellow;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var b1 = document.getElementById("ball1");
+				var b2 = document.getElementById("ball2");
+				var b3 = document.getElementById("ball3");
+				var b4 = document.getElementById("ball4");
+
+				var degree1 = degree2=degree3=degree4=0;
+				var rad1 = 50;
+				var rad2 = 100;
+				var rad3 = 150;
+				var rad4 = 200;
+				var move1 = setInterval(function(){
+					b1.style.left = 500+rad1*Math.sin(degree1*Math.PI/180)+"px";
+					b1.style.top = 300+rad1*Math.cos(degree1*Math.PI/180)+"px";
+					degree1++;
+				},40);
+				
+				var move2 = setInterval(function(){
+					b2.style.left = 500+rad2*Math.sin(degree2*Math.PI/180)+"px";
+					b2.style.top = 300+rad2*Math.cos(degree2*Math.PI/180)+"px";
+					degree2++;
+				},40);
+				
+				var move3 = setInterval(function(){
+					b3.style.left = 500+rad3*Math.sin(degree3*Math.PI/180)+"px";
+					b3.style.top = 300+rad3*Math.cos(degree3*Math.PI/180)+"px";
+					degree3++;
+				},40);
+				
+				var move4 = setInterval(function(){
+					b4.style.left = 500+rad4*Math.sin(degree4*Math.PI/180)+"px";
+					b4.style.top = 300+rad4*Math.cos(degree4*Math.PI/180)+"px";
+					degree4++;
+				},40);
+				
+				
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<div id="ball0"></div>
+		<div id="ball1"></div>
+		<div id="ball2"></div>
+		<div id="ball3"></div>
+		<div id="ball4"></div>
+	</body>
+</html>

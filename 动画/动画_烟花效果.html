@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body,html{
+				width: 100%;
+				height: 100%;
+				background: black;
+			}
+			.fire{
+				width: 5px;
+				height: 20px;
+				background: white;
+				position:absolute;
+			}
+			.spark{
+				width: 5px;
+				height: 5px;
+				position: absolute;
+			}
+		</style>
+		<script type="text/javascript" src="move.yintao1.05.js" ></script>
+		<script>
+			document.onclick = function(evt){
+				var e = evt || event;
+				new Fire({x:e.clientX,y:e.clientY}).init().lanuch();
+			}
+			
+			function Fire(coord){
+				this.main = document.createElement("div");
+				this.coord = coord;
+				//初始化
+				this.init = function(){
+					this.main.className = "fire";
+					this.main.style.top = document.body.offsetHeight + "px";
+					this.main.style.left = this.coord.x + "px";
+					document.body.appendChild(this.main);
+					console.log("这是初始化，"+this.main.offsetLeft+"，"+this.main.offsetTop)
+					return this;
+				}
+				//发射
+				this.lanuch = function(){
+					console.log("这是发射")
+					var that = this;
+					animate(this.main,{top:this.coord.y,height:5},{callback:function(){
+						that.explode();
+					}});
+					
+				}
+				//爆炸
+				this.explode = function(){
+					console.log("这是爆炸")
+					this.killself();
+					var spark_num =  Math.round(Math.random()*30+30);
+					for(var i=0;i<spark_num;i++){
+						new Spark(this.coord).init().parabola();
+					}
+				}
+				//自我销毁
+				this.killself = function(){
+					console.log("这是销毁")
+					this.main.remove();
+				}
+			}
+			
+			function Spark(coord){
+				this.main = document.createElement("div")
+				//初始化
+				this.init = function(){
+					console.log("这是烟花的初始化");
+					this.main.className = "spark";
+					this.main.style.top = coord.y + "px";
+					this.main.style.left = coord.x + "px";
+					this.main.style.background = randomColor();
+					document.body.appendChild(this.main);
+					return this;
+				}
+				//抛物线运动
+				this.parabola = function(){
+					console.log("这是烟花的抛物线");
+					var that = this;
+					var speedx =  Math.round(Math.random()*40-20);
+					var speedy =  Math.round(Math.random()*40-20);
+					that.timer = setInterval(function(){
+						console.log("定时器开启")
+						that.main.style.top = that.main.offsetTop +speedy++ +"px";
+						that.main.style.left = that.main.offsetLeft +speedx + "px";
+						
+						if(that.main.offsetTop>=document.body.offsetHeight){
+							that.killself();
+							clearInterval(that.timer);
+							console.log("定时器已清零");
+						}
+					},50);
+				}
+				//自我销毁
+				this.killself = function(){
+					this.main.remove();
+					console.log("这是烟花的销毁");	
+				}
+			}
+			
+			//随机生成颜色
+			function randomColor(){
+				var R = Math.round(Math.random()*255).toString(16);
+				var G = Math.round(Math.random()*255).toString(16);
+				var B = Math.round(Math.random()*255).toString(16);
+				return "#"+(R.length<2?"0"+R:R)+(G.length<2?"0"+G:G)+(B.length<2?"0"+B:B);
+			}
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
