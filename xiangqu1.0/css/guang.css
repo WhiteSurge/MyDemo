@@ -1,0 +1,251 @@
+
+#con{
+	width: 980px;
+	margin: 0 auto;
+}
+#list-top{
+	width: 980px;
+	height: 4px;
+	background: black;
+	position: relative;
+	margin-top: 15px;
+}
+#list-top i{
+	display: inline-block;
+	background: white;
+	width: 73px;
+	height: 5px;
+	position: absolute;
+	top: 0px;
+	left: 20px;
+}
+#list-top h2{
+	font-size: 14px;
+	position: absolute;
+	top: -8px;
+	left: 34px;
+}
+#list-content{
+	width: 990px;
+}
+#list-content li{
+	width: 235px;
+	height: 140px;
+	border: 1px solid #E6E7E8;
+	float: left;
+	margin: 6px 10px 0px 0;
+}
+#list-content dl{
+	width: 237px;
+	height: 45px;
+	margin-top: 50px;
+}
+#list-content dt{
+	width: 60px;
+	height: 44px;
+	line-height: 22px;
+	padding-right: 10px;
+	font-size: 14px;
+	float: left;
+	border-right: 1px solid black;
+	margin-right: 15px;
+}
+#list-content dd{
+	font-size: 12px;
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	color: #777;
+	border: 1px solid white;
+	border-radius: 30px;
+	padding: 0 5px;
+}
+#list-content dt:hover{
+	color: #93BBC4;
+}
+#list-content dd:hover{
+	border: 1px solid #E2C2AD;
+}
+#list-content dt a{
+	float: right;
+	display: block;
+	width: 30px;
+	text-align: right;
+}
+#list1{
+	background: url(../img/list_bg1.png) no-repeat;
+	background-position: 150px 80px;
+}
+#list2{
+	background: url(../img/list_bg2.png) no-repeat;
+	background-position: 150px 80px;
+}
+#list3{
+	background: url(../img/list_bg3.png) no-repeat;
+	background-position: 150px 80px;
+}
+#list3 dt a{
+	width: 42px;
+}
+#list4{
+	background: url(../img/list_bg4.png) no-repeat;
+	background-position: 145px 50px;
+}
+#list4 dt{
+	margin-left: 30px;
+}
+#list4 dt a{
+	width: 72px;
+}
+#list5{
+	background: url(../img/list_bg5.png) no-repeat;
+	background-position: 150px 70px;
+}
+#list6{
+	background: url(../img/list_bg6.png) no-repeat;
+	background-position: 140px 45px;
+}
+#list6 dt a{
+	width: 45px;
+}
+#list7{
+	background: url(../img/list_bg8.png) no-repeat;
+	background-position: 120px 60px;
+}
+#list8{
+	background: url(../img/list_bg7.png) no-repeat;
+	background-position: 100px 50px;
+}
+#list7 dt a{
+	width: 45px;
+}
+#list8 dt a{
+	width: 45px;
+}
+#list8 dt {
+	margin-left: 30px;
+}
+#list8 dd{
+	color: #62BBC4;
+}
+#list8 dd:hover{
+	border:1px solid white
+}
+#fallwater-title{
+	width: 980px;
+	height: 20px;
+	margin: 55px auto;
+}
+#fallwater-title h2{
+	border-left: 5px solid black;
+	border-right: 5px solid black;
+	font-size: 18px;
+	line-height: 20px;
+	padding: 0 5px;
+	float: left;
+}
+#fallwater-title div{
+	float: left;
+	padding-left: 20px;
+}
+#fallwater-title a{
+	display: block;
+	float: left;
+	border-radius: 30px;
+	padding: 0 10px;
+	font-size: 12px;
+	color: #777;
+	background: #ECECEC;
+	height: 20px;
+	line-height: 20px;
+	margin-right: 10px;
+}
+#fallwater-title .title-choose{
+	background: black;
+	color: white;
+}
+#fallwater-title i{
+	display: block;
+	width: 724px;
+	height: 20px;
+	background: url(../img/title-dotted.png) 0 5px no-repeat;
+	background-repeat-x: repeat;
+	float: left;
+}
+#fallwater-content{
+	width: 1035px;
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+.fall-item{
+	width: 290px;
+	padding: 10px 10px 20px 10px;
+	margin: 0 15px 20px 15px ;
+	border: 1px solid white;
+}
+.fall-item:hover{
+	border: 1px solid #777;
+}
+.fall-img{
+	width: 290px;
+}
+.fall-txt{
+	width: 180px;
+	height: 100px;
+	margin: 20px auto;
+	font-size: 12px;
+	position: relative;
+	border-bottom: 1px dashed #777;
+}
+.fall-txt p{
+	width: 180px;
+	height: 12px;
+	margin: 0 auto;
+	border-bottom: 1px solid #777;
+	position: absolute;
+}
+.fall-txt div{
+	width: 125px;
+	height: 24px;
+	margin: 0 auto;
+	line-height: 24px;
+	background: white;
+	position: relative;
+}
+.fall-txt div span{
+	width: 57px;
+	margin: 0px 4px;
+	float: left;
+}
+.fall-txt div i{
+	display: inline-block;
+	background: url(../img/like.png) no-repeat 0 6px;
+	width: 20px;
+	height: 24px;
+	float: left;
+	
+}
+.fall-txt div i:hover{
+	background: url(../img/liked.png) no-repeat 0 6px;
+}
+.fall-txt div em{
+	margin-left: 5px;
+	font-style: normal;
+	float: left;
+}
+.fall-txt dl{
+	width: 180px;
+	height: 69px;
+	text-align: center;
+}
+.fall-txt dl dt{
+	margin: 10px 0;
+}
+.fall-txt dl dd{
+	margin-left: 45px;
+	float: left;
+}
+#loading{
+	width: 100%;
+}

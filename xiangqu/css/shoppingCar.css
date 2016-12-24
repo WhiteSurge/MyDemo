@@ -1,0 +1,223 @@
+#box{
+	width: 980px;
+	margin: 30px auto;
+}
+#box h1{
+	font-size: 30px;
+	font-weight: 900;
+	height: 33px;
+	line-height: 33px;
+	padding-left: 60px;
+	background: url(../img/shopcar.png) no-repeat 0 5px;
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+#choose-title {
+	width: 980px;
+	margin-bottom: 50px;
+}
+#choose-title li{
+	float: left;
+	font-size: 18px;
+	height: 22px;
+	line-height: 22px;
+	color: #aaa;
+	margin-right: 20px;
+}
+.choose-i{
+	display: block;
+	float: left;
+	background: url(../img/choosebox.png) no-repeat;
+	width: 24px;
+	height: 24px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.choose-i2{
+	background: url(../img/checkedbox.png) no-repeat;
+}
+.chooseTitle-span{
+	color: black;
+	font-weight: 900;
+	font-size: 20px;
+	margin-right: 150px;
+	
+}
+#choose-title #comMessage{
+	width: 392px;
+}
+#choose-title #comNumber{
+	width: 90px;
+}
+#choose-title #comPrice{
+	width: 120px;
+}
+.table-center{
+	margin-top: 50px;
+}
+.choose-top{
+	margin-bottom: 20px;
+}
+.choose-bottom{
+	width: 980px;
+	height: 165px;
+	border: 1px solid #ddd;
+	margin: 10px 0;
+}
+.td0{
+	padding-left:20px ;
+	width: 48px;
+	height: 165px;
+}
+.td1{
+	width: 127px;
+	height: 165px;
+}
+.td1 img{
+	width: 106px;
+	height: 106px;
+	border: 1px solid #777;
+}
+.td2{
+	width: 160px;
+	font-size: 16px;
+	line-height: 25px;
+	padding: 0 8px;
+	height: 165px;
+}
+.td2 a{
+	color: black;
+	text-decoration: none;
+}
+.td2 a:hover{
+	text-decoration: underline;
+}
+.td3{
+	padding-left: 80px;
+	padding-right: 30px;
+	width: 106px;
+	font-size: 12px;
+	color: #CCCCCC;
+	height: 165px;
+}
+.td4{
+	padding-left: 30px;
+	width: 146px;
+	height: 165px;
+}
+.td4 button{
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: white;
+	float: left;
+	font-size: 25px;
+	line-height: 25px;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	margin-top: 1px;
+}
+.td4 button:hover{
+	background: black;
+	color: white;
+}
+.td4 input{
+	width: 34px;
+	height: 24px;
+	border: 2px solid black;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 15px;
+	outline: none;
+	margin: 0 5px;
+	float: left;
+}
+.td5{
+	font-size: 20px;
+	padding-left: 20px;
+	width: 120px;
+	height: 165px;
+}
+.td6{
+	padding-right: 20px;
+	height: 165px;
+}
+
+#footer{
+	width: 980px;
+	height: 40px;
+	margin: 60px auto;
+	background: url(../img/shop-footer.png) no-repeat 788px 31px;
+	border-bottom: 3px solid black;
+	font-size: 20px;
+	color: #777;
+}
+#footer i{
+	margin-top: 6px;
+}
+#footer span{
+	height: 37px;
+	line-height: 37px;
+}
+#foot-allchoose{
+	font-weight: 900;
+	margin-right: 30px;
+}
+#foot-del{
+	margin-right: 230px;
+}
+.del:hover{
+	color: #D8B53A;
+}
+#footer em{
+	font-style: normal;
+	color: #C20000;
+	margin: 0 5px;
+}
+#foot-count{
+	float: right;
+	padding-right: 10px;
+}
+#foot-count span{
+	color: #C20000;
+	font-size: 28px;
+	line-height: 30px;
+}
+#foot-count span em{
+	font-family: "宋体";
+	font-size: 30px;
+}
+#footer-btn{
+	width: 980px;
+	height: 80px;
+	margin: 80px auto;
+}
+#footer-btn #checkout-btn{
+	width: 196px;
+	height: 66px;
+	border: 4px solid black;
+	font-size: 30px;
+	font-weight: 900;
+	font-family: "宋体";
+	text-align: center;
+	line-height: 66px;
+	border-radius: 20px;
+	float: right;
+	cursor: pointer;
+}
+#empty{
+	width: 980px;
+	height: 500px;
+	position: relative;
+	display: none;
+}
+#empty img{
+	width: 538px;
+	height: 170px;
+	position: absolute;
+	top: 165px;
+	left: 50%;
+	margin-left: -269px;
+}

@@ -1,0 +1,120 @@
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img{ margin:0; padding:0; }
+ul,ol,li{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-size:16px;font-weight:100;}
+img{border:0;display:block;}
+.clearfix:after{content:".";clear:both;display:block;height:0;overflow:hidden;visibility:hidden;}
+body,html{
+	width: 100%;
+	height: 100%;
+	font-family: "微软雅黑";
+}
+a{
+	cursor: pointer;
+}
+#box{
+	width: 100%;
+	height: 100%;
+	background: url(../img/loginbg.png);
+}
+#box #title{
+	width: 980px;
+	height: 100px;
+	margin: 0 auto;
+}
+#title a{
+	display: block;
+	width: 980px;
+	height: 24px;
+	padding: 38px 50px;
+}
+#box #content{
+	width: 980px;
+	height: 393px;
+	border: 1px solid #DBDBDB;
+	background: white;
+	margin: 0px auto;
+}
+#content h2{
+	width: 350px;
+	height: 14px;
+	font-size: 14px;
+	padding: 28px 0;
+	text-align: center;
+	margin: 0 auto;
+}
+#content ul{
+	width: 350px;
+	height: 321px;
+	margin: 0 auto;
+}
+#content div{
+	width: 350px;
+	height: 48px;
+	border: 1px solid #C0C0C0;
+	border-radius: 5px;
+}
+#phonenum{
+	margin-bottom: 10px;
+}
+#content input{
+	border: 0;
+	width: 305px;
+	height: 46px;
+	line-height: 46px;
+	font-size: 14px;
+	float: left;
+	outline: none;
+}
+#content i{
+	display: block;
+	float: left;
+	width: 18px;
+	height: 46px;
+	padding: 0 10px;
+}
+#phonenum i{
+	background: url(../img/phonenum.png) no-repeat;
+	background-position: 10px 15px;
+}
+#password i{
+	background: url(../img/password.png) no-repeat;
+	background-position: 10px 15px;
+}
+#content p{
+	display: block;
+	height: 26px;
+	width: 350px;
+	font-size: 14px;
+	line-height: 26px;
+}
+#tip{
+	color: #D3D3D3;
+}
+#warning{
+	color: #FF4A4A;
+	margin-bottom: 5px;
+}
+#content span{
+	display: block;
+	height: 48px;
+	width: 350px;
+	background: #343434;
+	color: white;
+	text-align: center;
+	line-height: 48px;
+	font-size: 12px;
+	border-radius: 5px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+#content a:hover{
+	text-decoration: underline;
+}
+#goto{
+	margin-top: 30px;
+	display: block;
+	font-size: 13px;
+	width: 350px;
+	text-align: center;
+	color: black;
+}

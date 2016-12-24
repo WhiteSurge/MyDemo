@@ -1,0 +1,160 @@
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img{ margin:0; padding:0; }
+ul,ol,li{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-size:16px;font-weight:100;}
+img{border:0;display:block;}
+.clearfix:after{content:".";clear:both;display:block;height:0;overflow:hidden;visibility:hidden;}
+body,html{
+	width: 100%;
+	height: 100%;
+	font-family: "微软雅黑";
+}
+a{
+	cursor: pointer;
+}
+#box{
+	width: 100%;
+	height: 100%;
+	background: url(../img/loginbg.png);
+}
+#box #title{
+	width: 980px;
+	height: 100px;
+	margin: 0 auto;
+}
+#title a{
+	display: block;
+	width: 980px;
+	height: 24px;
+	padding: 38px 50px;
+}
+#content{
+	width: 980px;
+	height: 450px;
+	margin: 10px auto;
+}
+#content #pic{
+	float: left;
+}
+#pic img{
+	width: 546px;
+	height: 450px;
+}
+#content #signbox{
+	margin-left: 40px;
+	width: 350px;
+	height: 404px;
+	padding: 25px 20px 20px;
+	border: 1px solid #C0C0C0;
+	background: white;
+	float: left;
+}
+#signbox h2{
+	width: 350px;
+	height: 24px;
+	font-size: 16px;
+	text-align: center;
+	line-height: 24px;
+	margin-bottom: 20px;
+}
+.tip{
+	width: 350px;
+	height: 20px;
+	background: url(../img/faster_line.jpg) no-repeat;
+	background-position-y: 4px;
+	text-align: center;
+	font-size: 12px;
+	color: #D7D5D8;
+	margin-bottom: 15px;
+}
+#signbox .inp{
+	width: 350px;
+	height: 48px;
+	border: 1px solid #C0C0C0;
+	border-radius: 5px;
+}
+#phonenum{
+	margin-bottom: 10px;
+}
+#signbox input{
+	border: 0;
+	width: 305px;
+	height: 46px;
+	line-height: 46px;
+	font-size: 14px;
+	float: left;
+	outline: none;
+}
+#signbox i{
+	display: block;
+	float: left;
+	width: 18px;
+	height: 46px;
+	padding: 0 10px;
+}
+#phonenum i{
+	background: url(../img/phonenum.png) no-repeat;
+	background-position: 10px 15px;
+}
+#password i{
+	background: url(../img/password.png) no-repeat;
+	background-position: 10px 15px;
+}
+#content #log{
+	display: block;
+	height: 48px;
+	width: 350px;
+	background: #343434;
+	color: white;
+	text-align: center;
+	line-height: 48px;
+	font-size: 14px;
+	border-radius: 5px;
+	margin-bottom: 25px;
+	cursor: pointer;
+}
+#tishi{
+	height: 30px;
+}
+#warning,#tip{
+	font-size: 12px;
+	line-height: 30px;
+}
+#warning{
+	color: #FF4A4A;
+}
+#tip{
+	float: right;
+}
+#link-btn{
+	width: 244px;
+	height: 36px;
+	padding-left: 106px;
+}
+#link-btn em{
+	width: 36px;
+	height: 36px;
+	display: block;
+	float: left;
+	margin-right: 15px;
+}
+#btn-weixin{
+	background: url(../img/three_logo.gif) no-repeat;
+}
+#btn-weibo{
+	background: url(../img/three_logo.gif) no-repeat -52px;
+}
+#btn-qq{
+	background: url(../img/three_logo.gif) no-repeat -105px;
+}
+#signbox p{
+	font-size: 14px;
+	margin-top: 20px;
+	text-align: center;
+	color: #C0C0C0;;
+}
+#signbox a{
+	color: black;
+}
+#signbox a:hover{
+	text-decoration: underline;
+}
