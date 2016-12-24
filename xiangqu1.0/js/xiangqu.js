@@ -122,8 +122,7 @@ $(document).ready(function(){
 		prePic();
 		autoPlay();
 	});
-	
-	
+
 	//gotopeoplelike按钮
 	//鼠标滑入滑出事件
 	$("#goToPeopleLike").mouseenter(function(){
@@ -132,8 +131,7 @@ $(document).ready(function(){
 	$("#goToPeopleLike").mouseleave(function(){
 		$("#goToPeopleLike ins").animate({"margin-left":41},300)
 	})
-	
-	
+
 	//喜欢栏点击滚动
 	var timer2;
 	var likeList = $(".peopleLikeItem");
@@ -163,7 +161,6 @@ $(document).ready(function(){
 		}
 		autoLikePlay();
 	});
-	
 	//喜欢栏自动滚动
 	autoLikePlay();
 	function autoLikePlay(){
@@ -176,57 +173,78 @@ $(document).ready(function(){
 			} 
 		},4000)
 	}
-	
-	//喜欢栏数据获取
+	//喜欢栏数据获取及动态创建
 	$.ajax({
 		type:"get",
 		url:"json/like.json",
 		success:function(data){
 			$.each(data,function(i){
-				$(".peopleLikeItem").eq(i).find(".peopleImg img").attr("src",this.user);
-				$(".peopleLikeItem").eq(i).find("dt span").html(this.name);
-				$(".peopleLikeItem").eq(i).find("dd span").html(this.time);
-				$(".peopleLikeItem").eq(i).find(".itemImg img").attr("src",this.item);
+				var newLi = '<li class="peopleLikeItem"> <a class="peopleImg">'
+					+'<img src='+data[i].user+'/>'
+					+'</a> <dl>'
+					+'<dt><span>'+data[i].name+'</span></dt>'
+					+'<dd><span>'+data[i].time+'</span><i></i>喜欢了一个商品</dd> </dl>'
+					+'<div class="itemImg"><img src='+data[i].item+'/></div> </li>';
+				$("#peopleLikeList").append(newLi);
+
 			})
 		}
 	})
-	//设计师栏数据获取
+	//设计师栏数据获取及动态创建
 	$.ajax({
 		type:"get",
 		url:"json/designer.json",
 		success:function(data){
 			$.each(data,function(i){
-				$(".des_content").eq(i).find(".des_show img").attr("src",this.src);
-				$(".des_content").eq(i).find(".des_show_name a").html(this.name);
+				var newLi = '<li class="des_content"> <a class="des_show">'
+					+'<img src ='+data[i].src+' /> </a> <p class="des_show_name">'
+					+'<a>'+data[i].name+'</a> </p> </li>';
+				$("#designer-right ul").append(newLi);
+				var lastLi = '<li class="other"><a class="more"><span>更多<br/>设计师品牌</span></a></li>';
+				if(i==data.length-1){
+					$("#designer-right ul").append(lastLi);
+				}
 			})
 		}
 	});
-	//手工栏数据获取
+	//设计师左部鼠标事件
+
+	//手工栏数据获取及动态创建
 	$.ajax({
 		type:"get",
 		url:"json/hand.json",
 		success:function(data){
 			$.each(data, function(i) {
-				$(".handmaker_item").eq(i).find(".hand-img img").attr("src",this.img);
-				$(".handmaker_item").eq(i).find(".hand-txt a").html(this.name);
-				$(".handmaker_item").eq(i).find(".hand-txt i").html(this.peo);
-				$(".handmaker_item").eq(i).find(".hand-icon img").attr("src",this.logo);
+				var newLi = '<li class="handmaker_item"><a class="hand-img" href="shangpin.html">'
+					+'<img src='+data[i].img+'/></a> <p class="hand-txt">'
+					+'<a>'+data[i].name+'</a>'
+					+'<span><i>'+data[i].peo+'</i>人关注</span> </p>'
+					+'<div class="hand-icon"><img src = '+data[i].logo+'/></div></li>';
+				$("#handmaker_content ul").append(newLi);
+				var lastLi = '<li class="hand-other"><a class="more"><span>更多<br/>手工艺人</span></a></li>';
+				if(i==data.length-1){
+					$("#handmaker_content ul").append(lastLi);
+				}
 			});
+			hand_mouse();
 		}
 	});
 	//手工栏鼠标滑入滑出事件
-	$.each($(".handmaker_item"), function(i) {
-		$(".handmaker_item").eq(i).mouseenter(function(){
-			$(this).find("img").css("opacity","0.85");
-			$(".hand-icon").eq(i).css("display","block");
+	function hand_mouse(){
+		$.each($(".handmaker_item"), function(i) {
+			$(".handmaker_item").eq(i).mouseenter(function(){
+				$(this).find("img").css("opacity","0.85");
+				$(".hand-icon").eq(i).css("display","block");
+			});
 		});
-	});
-	$.each($(".handmaker_item"), function(i) {
-		$(".handmaker_item").eq(i).mouseleave(function(){
-			$(this).find("img").css("opacity","1");
-			$(".hand-icon").eq(i).css("display","none");
-		});
-	})
+		$.each($(".handmaker_item"), function(i) {
+			$(".handmaker_item").eq(i).mouseleave(function(){
+				$(this).find("img").css("opacity","1");
+				$(".hand-icon").eq(i).css("display","none");
+			});
+		})
+	}
+
 
 	//share分类栏
 	$("#share-total").mouseenter(function(){

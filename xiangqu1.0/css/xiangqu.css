@@ -375,6 +375,11 @@ a{
 	width: 220px;
 	height: 220px;
 }
+.itemImg img:hover{
+	background: #C5C5C5;
+	opacity: 0.9;
+	cursor: pointer;
+}
 #peopleLikeList{
 	width: 2440px;
 	height: 360px;
@@ -440,6 +445,12 @@ a{
 	padding: 5px;
 	border: 1px solid #F6F6F6;
 }
+#designer-left-cont img:hover{
+	background: #C5C5C5;
+	opacity: 0.9;
+	cursor: pointer;
+}
+
 #designer-left-cont a{
 	font-size: 16px;
 	line-height: 40px;
@@ -482,6 +493,10 @@ a{
 	line-height: 27px;
 	margin-top: 5px;
 	width: 100px;
+}
+#designer-left-info ul li:hover{
+	text-decoration: underline;
+	cursor: pointer;
 }
 #designer-left-info #toDesigner{
 	padding-left: 35px;

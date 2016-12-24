@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	$("#log").click(function(){
+		//输入内容合法性验证
 		var phoneNum = $("#phonenum input").val();
 		var passWord = $("#password input").val();
 		if(!/^1(3|4|5|7|8)\d{9}$/.test(phoneNum)){
@@ -16,62 +17,52 @@ $(document).ready(function(){
 			userRepeat(phoneNum,passWord);
 		}
 	})
-	//手机号是否被注册判断函数
-	var userlist = new Array();//用来存本地的数组（双括号）
-	var userlist2 = new Array();//用来存cookie数组
+	//手机号是否被注册验证
 	var userType = true;
 	function userRepeat(num,pass){
 		console.log("判断是否被注册");
 		if(getCookie("userlist")==""){
 			console.log("内存为空");
 			$("#warning").html("");
-			userlist.push("{{phonenumber:"+"'"+num+"'"+",password:"+"'"+pass+"'"+"}}");
-			setCookie("userlist",userlist,30);
+			var newUser = '{"phonenumber":'+'"'+num+'"'+',"password":'+'"'+pass+'"'+'}';
+			//userlist.push(newUser);
+			setCookie("userlist",newUser,30);
 			//console.log("注册成功1"+userlist);
 			alert("注册成功！点击进入登录页面")
 			window.location.href = "signIn.html";
 		} else {
-			userlist2 = changeCookie(getCookie("userlist"));
 			userType = true;
-			for (var i in userlist2){
-				console.log(eval("("+userlist2[i]+")"));
-				//for循环只能判断存在，不能判断不存在
-				if(eval("("+userlist2[i]+")").phonenumber == num){
-					console.log("已存在");
+			//如果内存中只含有一个用户信息
+			if(getCookie("userlist").indexOf("&&")==-1){
+				var ouser = eval("("+getCookie("userlist")+")");
+				if(ouser.phonenumber == num){
 					$("#warning").html("该手机号已经被注册！");
 					userType = false;
-					break;
 				}
-			}	
+			} else {
+				var ousers = getCookie("userlist").split("&&");
+				$.each(ousers,function(i){
+					var ouser = eval("("+ousers[i]+")");
+					if(ouser.phonenumber == num){
+						$("#warning").html("该手机号已经被注册！");
+						userType = false;
+					}
+				})
+			}
 			//当确定数组中不存在时
 			if(userType){
 				console.log("新号码");
 				$("#warning").html("");
-				userlist.push("{{phonenumber:"+"'"+num+"'"+",password:"+"'"+pass+"'"+"}}");
-				setCookie("userlist",userlist,30);
+				var oldusers = getCookie("userlist");
+				var newUser = '{"phonenumber":'+'"'+num+'"'+',"password":'+'"'+pass+'"'+'}';
+				setCookie("userlist",oldusers+"&&"+newUser,30);
 				alert("注册成功！点击进入登录页面");
 				window.location.href = "signIn.html";
 				//console.log("注册成功2，"+userlist);
 			}
 		}
 	}
-	//将获取的cookie值（字符串）进行修改
-	function changeCookie(cookie){
-		var list = new Array();
-		list = cookie.split("},{");
-		//console.log("分割后数组："+list);
-		if(list.length==1){
-			//console.log("数组长度为1");
-			list[0] = list[0].replace("{","");
-			list[0] = list[0].replace("}","");
-		} else {
-			//console.log("数组长度大于1");
-			list[0] = list[0].replace("{","");
-			list[list.length-1] = list[list.length-1].replace("}","");
-		}
-		console.log("返回数组："+list);
-		return list;
-	}
+
 	//cookie获取函数
 	function getCookie(key){
 		var str = document.cookie;

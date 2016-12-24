@@ -8,16 +8,15 @@ $(document).ready(function(){
 		success:function(data){
 			$.each(data, function(i) {
 				//动态创建标签
-				var newDiv = "<div class='fall-item'><div class='fall-img'><a><img/></a></div><div class='fall-txt'><p></p><div><span></span><i></i><em></em></div><dl><dt></dt><dd></dd><dd style='margin-left: 20px'></dd></dl></div></div>"
+				var newDiv = "<div class='fall-item'><div class='fall-img'>" +
+					"<a><img src="+data[i].src+"/></a></div><div class='fall-txt'><p></p><div>" +
+					"<span>"+data[i].price+"</span><i></i><em>"+data[i].like+"</em></div>" +
+					"<dl><dt>"+data[i].name+"</dt><dd>"+data[i].type1+"</dd>" +
+					"<dd style='margin-left: 20px'>"+data[i].type2+"</dd></dl></div></div>"
 				//console.log(i);
 				$("#fallwater-content").append(newDiv);
-				$("#fallwater-content .fall-img").eq(i).find("img").attr("src",this.src).css("width","290px");
 				$("#fallwater-content .fall-img").eq(i).find("img").css("height",this.height);
-				$("#fallwater-content .fall-txt").eq(i).find("span").html(this.price);
-				$("#fallwater-content .fall-txt").eq(i).find("em").html(this.like);
-				$("#fallwater-content .fall-txt").eq(i).find("dt").html(this.name);
-				$("#fallwater-content .fall-txt").eq(i).find("dd").eq(0).html(this.type1);
-				$("#fallwater-content .fall-txt").eq(i).find("dd").eq(1).html(this.type2);
+
 				//当循环到下标为14时停止当前循环，即只加载15张图片
 				if(i>=picToNum){
 					return false;

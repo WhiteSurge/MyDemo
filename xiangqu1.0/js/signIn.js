@@ -2,50 +2,49 @@ $(document).ready(function(){
 	$("#log").click(function(){
 		var userName = $("#phonenum input").val();
 		var passWord = $("#password input").val();
-		var userList = changeCookie(getCookie("userlist"));
 		var userType = false;//true表示cookie中存在该用户，false表示不存在
-		for(var i in userList){
-			if(eval("("+userList[i]+")").phonenumber == userName){
-				console.log("存在该用户");
-				userType = true;
-				break;
+		//如果cookie中只存入了一个用户信息或没有
+		if(getCookie("userlist").indexOf("&&")==-1){
+			console.log(getCookie("userlist"));
+			var ouser = eval("("+getCookie("userlist")+")");
+			if(ouser.phonenumber == userName){
+				if(ouser.password == passWord){
+					//将登录成功的用户名存起来并进行登录操作
+					setCookie("username",userName,15);
+					window.location.href = "index.html";
+				} else {
+					$("#warning").html("对不起，您输入的用户名或密码有误！");
+				}
+			} else {
+				$("#warning").html("该用户名不存在！");
 			}
-		}
-		if(userType){
-			for(var i in userList){
-				if(eval("("+userList[i]+")").phonenumber == userName){
-					if(eval("("+userList[i]+")").password == passWord){
+		}else{
+			var ousers = getCookie("userlist").split("&&");
+			console.log(ousers)
+			$.each(ousers,function(i){
+				console.log("遍历cookie数组")
+				console.log(ousers[i])
+				var ouser = eval("("+ousers[i]+")");
+
+				if(ouser.phonenumber == userName){
+					userType = true;
+					if(ouser.password == passWord){
 						//将登录成功的用户名存起来并进行登录操作
 						setCookie("username",userName,15);
 						window.location.href = "index.html";
 					} else {
 						$("#warning").html("对不起，您输入的用户名或密码有误！");
 					}
-					break;
 				}
+			})
+
+			if(!userType){
+				$("#warning").html("该用户名不存在！");
 			}
-		} else {
-			$("#warning").html("该用户名不存在！");
 		}
+
 	})
-	
-	//将获取的cookie值（字符串）进行修改
-	function changeCookie(cookie){
-		var list = new Array();
-		list = cookie.split("},{");
-		//console.log("分割后数组："+list);
-		if(list.length==1){
-			//console.log("数组长度为1");
-			list[0] = list[0].replace("{","");
-			list[0] = list[0].replace("}","");
-		} else {
-			//console.log("数组长度大于1");
-			list[0] = list[0].replace("{","");
-			list[list.length-1] = list[list.length-1].replace("}","");
-		}
-		console.log("返回数组："+list);
-		return list;
-	}
+
 	//cookie获取函数
 	function getCookie(key){
 		var str = document.cookie;
