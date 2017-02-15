@@ -1,0 +1,58 @@
+
+@font-face {font-family: "iconfont";
+  src:url('../fonts/iconfont.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tianjia:before { content: "\e614"; }
+
+.icon-shouji:before { content: "\e647"; font-size: 1.5rem;margin-left: -.1rem; color: deepskyblue;}
+
+.icon-unie60a:before { content: "\e601";font-size: 1.3rem;margin-left: -.05rem; color: deepskyblue;}
+
+.icon-yule:before { content: "\e66e"; font-size: 1.5rem;margin-left: -.1rem; color: deepskyblue;}
+
+.icon-daocha:before { content: "\e608"; font-size: 1.8rem; margin-left: -.2rem; color: deepskyblue;}
+
+.icon-riyongpin:before { content: "\e618"; font-size: 1.4rem; margin-left: -.05rem; color: deepskyblue;}
+
+.icon-jiushui:before { content: "\e63c";font-size: 1.3rem; color: deepskyblue; }
+
+.icon-lvyou:before { content: "\e603"; font-size: 1.5rem; margin-left: -.1rem; color: deepskyblue;}
+
+.icon-meizhuang:before { content: "\e63b"; font-size: 1.3rem; color: deepskyblue;}
+
+.icon-qita:before { content: "\e610"; font-size: 1.3rem; color: deepskyblue;}
+
+.icon-shuiguo:before { content: "\e645"; font-size: 1.3rem; color: deepskyblue;}
+
+.icon-dianying:before { content: "\e60d"; font-size: 1.4rem; color: deepskyblue;}
+
+.icon-fushi:before { content: "\e6ee"; font-size: 1.2rem; color: deepskyblue; }
+
+.icon-shuidianmei:before { content: "\e627"; font-size: 1.2rem; color: deepskyblue; }
+
+.icon-qiche-copy:before { content: "\e60e"; font-size: 1.4rem; color: deepskyblue; }
+
+.icon-yiliao:before { content: "\e611"; font-size: 1.5rem; margin-left: -.1rem; color: deepskyblue;}
+
+.icon-xuexi:before { content: "\e512"; font-size: 1rem; color: deepskyblue;}
+
+
+.icon-touzi:before { content: "\e60a"; font-size: 1.2rem; color: orange;}
+
+.icon-jianzhi:before { content: "\e718"; font-size: 1.2rem; color: orange;}
+
+.icon-wodegongzi:before { content: "\e63a"; font-size: 1.2rem; color: orange;}
+
+.icon-hongbao-copy:before { content: "\e61d"; font-size: 1.2rem; color: orange;}
+
+.icon-jin:before { content: "\e609"; font-size: 1.2rem; color: orange;}
+

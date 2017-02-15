@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+		<!--<link rel="stylesheet" href="css/common.css" />-->
+		<link rel="stylesheet" href="css/detail_diary.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">私人日记</h1>
+			<!--<a href="#sheet1" class="gengduo iconfont icon-gengduo mui-pull-right"></a>-->
+		</header>
+
+		<div class="mui-content">
+			<div class="diary-card-big">
+				<span class="diary_day" id="diary_day">2月12日</span>
+				<span class="diary_week" id="diary_week">· 星期日</span>
+				<span class="diary_weather" id="diary_weather">· 晴</span>
+				<textarea placeholder="日记内容..." class="detail-diary-content" id="diary_content"></textarea>
+				<span class="diary_time" id="diary_time">12:30</span>
+				<i class="iconfont icon-shanchu1 shanchu" id="del"></i>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+			});
+
+			var diary = JSON.parse(localStorage.getItem("diary"));
+			var thisNum = "";
+
+			//将内容加载显示出来
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				thisNum = self.num;
+				$("#diary_day").html(diary[thisNum].day);
+				$("#diary_week").html("· " + diary[thisNum].week);
+				$("#diary_weather").html("· " + "晴"||diary[thisNum].weather);
+				$("#diary_content").val(diary[thisNum].content);
+				$("#diary_time").html(diary[thisNum].time);
+			});
+
+			//在返回时自动保存
+			var old_back = mui.back;
+			(function(mui) {
+				//重写返回键
+				mui.back = function() {
+					//判断内容是否修改
+					if ($("#diary_content").val() == diary[thisNum].content) {
+						old_back();
+					} else {
+
+						//返回时保存新的内容
+						var date = new Date();
+						var month = date.getMonth() + 1;
+						var day = date.getDate();
+						var week = date.getDay();
+						var hour = date.getHours();
+						var min = date.getMinutes();
+						hour = hour > 9 ? hour : "0" + hour;
+						min = min > 9 ? min : "0" + min;
+						var diarytime = hour + ":" + min;
+						var diaryday = month + "月" + day + "日";
+						var diaryweek = "";
+						switch (week) {
+							case 0:
+								diaryweek = "星期日";
+								break;
+							case 1:
+								diaryweek = "星期一";
+								break;
+							case 2:
+								diaryweek = "星期二";
+								break;
+							case 3:
+								diaryweek = "星期三";
+								break;
+							case 4:
+								diaryweek = "星期四";
+								break;
+							case 5:
+								diaryweek = "星期五";
+								break;
+							case 6:
+								diaryweek = "星期六";
+								break;
+						}
+						var diaryweather = "";
+						//获取当前的地理位置
+						var diarylocal = "";
+						//设置本次任务的详细内容
+						var diarycontent = document.getElementById("diary_content").value;
+						var thediary = {
+							content: diarycontent,
+							time: diarytime,
+							day: diaryday,
+							week: diaryweek,
+							weather: diaryweather,
+							local: diarylocal
+						}
+
+						//修改内容
+						diary.splice(thisNum, 1, thediary);
+						localStorage.setItem("diary", JSON.stringify(diary));
+						old_back();
+
+						var wobj = plus.webview.getWebviewById("diary.html");
+						wobj.reload(true);
+					}
+				}
+			})(mui);
+
+			//删除任务
+			var del = document.getElementById("del");
+			del.addEventListener("tap", function() {
+				var btn = ["确定","取消"];
+	  			mui.confirm('珍贵的时光删除将无法恢复哦，你确定要删除吗？','确认删除？',btn,function(e){
+	    			if(e.index==0){
+	    				//执行删除操作
+	    				diary.splice(thisNum, 1);
+						localStorage.setItem("diary", JSON.stringify(diary));
+						old_back();
+						mui.toast('日记已删除', {
+							duration: 'long',
+							type: 'div'
+						});
+						//返回主页后重新加载页面
+						var wobj = plus.webview.getWebviewById("diary.html");
+						wobj.reload(true);
+	   	 			}
+	    		})
+				
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,19 @@
+body,html{
+	width: 100%;
+	height: 100%;
+}
+/*更多按钮*/
+.gengduo{
+	font-size: 1.2rem;
+	line-height: 44px;
+}
+/*内容*/
+.bill-detail-right{
+	float: right;
+	color: #007AFF;
+}
+#new-bill-text{
+	margin-left: .5rem;
+	margin-top: .3rem;
+	color: #007AFF;
+}
