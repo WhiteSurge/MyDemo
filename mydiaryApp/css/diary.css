@@ -1,0 +1,51 @@
+/*日记卡样式*/
+.diary-card{
+	margin: 5%;
+	padding: .9rem;
+	background: #FFFFFF;
+	width: 90%;
+	height: 9.5rem;
+	border-radius: .3rem;
+	box-shadow: .1rem .15rem .1rem .1rem #DDDDDD;
+	position: relative;
+}
+.diary-card p{
+	margin: 0;
+	font-size: .8rem;
+}
+.diary-card .diary-title{
+	color: #007AFF;
+}
+.diary-card .diary-title span{
+	margin-right: .15rem;
+	letter-spacing: .04rem;
+}
+.diary-card .diary-text{
+	font-size: .8rem;
+	line-height: 1.5rem;
+	text-indent: 1rem;
+	width: 100%;
+	-webkit-line-clamp: 3;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-left: .3rem;
+	margin-top: .3rem;
+}
+.diary-card .diary-write_info{
+	position: absolute;
+	right: 1rem;
+	bottom: .7rem;
+	font-size: .7rem;
+}
+.mui-content .appbtn{
+	position: fixed;
+	right: 1rem;
+	bottom: 3rem;
+}
+.mui-content .app{
+	position: fixed;
+	right: 1rem;
+	bottom: 3rem;
+}

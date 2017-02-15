@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/billTypeTable.css" />
+		<link rel="stylesheet" href="css/new_bill.css" />
+		
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<!--日期选择-->
+        <script src="lib/bootstrap-datepicker.js"></script>
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap-datepicker.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">记账</h1>
+		    <a class="mui-icon mui-icon-checkmarkempty mui-pull-right bill-ok" id="create_bill"></a>
+		</header>
+		<div class="mui-content">
+			<div class="bill_title">
+				<button class="btn_bill btn_choose" id="btnbillout">支出</button>
+				<button class="btn_bill" id="btnbillin">收入</button>
+			</div>
+			<div class="bill_top">
+				<p class="bill_type" id="bill_type">
+					<i class="iconfont icon-daocha bill_logo"></i>
+					<span class="bill_text">用餐</span>
+				</p>
+			    <input type="number" placeholder="0" class="bill_money" id="bill_money"/>
+			</div>
+			<table class="bill_bottom " id="bill_out_icons">
+				<tr>
+					<td class="iconfont icon-daocha"><br/>用餐</td>
+					<td class="iconfont icon-jiushui"><br/>酒水</td>
+					<td class="iconfont icon-qiche-copy"><br/>出行</td>
+					<td class="iconfont icon-riyongpin"><br/>日用品</td>
+				</tr>
+				<tr>
+					<td class="iconfont icon-lvyou"><br/>旅游</td>
+					<td class="iconfont icon-meizhuang"><br/>美妆</td>
+					<td class="iconfont icon-fushi"><br/>服饰</td>
+					<td class="iconfont icon-dianying"><br/>电影</td>
+				</tr>
+				<tr>
+
+					<td class="iconfont icon-shouji"><br/>话费</td>
+					<td class="iconfont icon-shuidianmei"><br/>水电</td>
+					<td class="iconfont icon-shuiguo"><br/>果蔬</td>
+					<td class="iconfont icon-unie60a"><br/>购物</td>
+				</tr>
+				<tr>
+					<td class="iconfont icon-xuexi"><br/>学习</td>
+					<td class="iconfont icon-yiliao"><br/>医疗</td>
+					<td class="iconfont icon-yule"><br/>娱乐</td>
+					<td class="iconfont icon-qita"><br/>其他</td>
+				</tr>
+			</table>
+			
+			<table class="bill_bottom bill_bottom_in disappear" id="bill_in_icons">
+				<tr>
+					<td class="iconfont icon-wodegongzi"><br/>工资</td>
+					<td class="iconfont icon-hongbao-copy"><br/>红包</td>
+					<td style="padding-top: 0;" class="iconfont icon-touzi" style="line-height: 1.5rem;"><br/>投资</td>
+					<td style="padding-top: 0;" class="iconfont icon-jianzhi" style="line-height: 1.5rem;"><br/>兼职</td>
+					<td class="iconfont icon-jin"><br/>奖金</td>
+				</tr>
+			</table>
+			
+			<div class="date-content">
+				<span class="date-title">设置日期</span>
+				<input type="button" class="date bill_date" value="设置日期" id="bill_date"/>
+			</div>
+			
+			<div class="beizhu-content">
+				<span class="beizhu-title">设置备注
+				<input type="text" class="beizhu-text" placeholder="请输入备注信息" id="beizhu"/>
+			</div>
+			
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/change_bill.js" ></script>
+	</body>
+
+</html>

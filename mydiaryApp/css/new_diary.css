@@ -1,0 +1,25 @@
+body,html{
+	height: 100%;
+}
+/*标题区*/
+.mui-bar-nav .mission-ok{
+	color: white;
+	font-size: 2.5rem;
+	line-height: 1.3rem;
+}
+/*内容区*/
+.mui-content{
+	width: 100%;
+	height: 100%;
+	padding: 5%;
+	background: white;
+}
+.new-diary-content{
+	width: 100%;
+	height: 95%;
+	padding: 0;
+	padding-top: 5%;
+	font-size: .9rem;
+	letter-spacing: .1rem;
+	border: 0;
+}

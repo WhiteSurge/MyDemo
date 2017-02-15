@@ -1,0 +1,60 @@
+body,html{
+	width: 100%;
+	height: 100%;
+}
+/*更多按钮*/
+.gengduo{
+	color: white;
+	line-height: 40px;
+}
+/*内容*/
+.mui-content{
+	width: 100%;
+	height: 100%;
+}
+.mui-content .detail-mission-title{
+	background-color: #F7F7F7;
+	border-radius: 0;
+	border: 0;
+	border-bottom: 1px solid #EEEEEE;
+	padding-top: 1rem;
+	height: 3.5rem;
+	font-size: 1.2rem;
+	margin: 0;
+}
+.mui-content .detail-mission-content{
+	border-radius: 0;
+	border: 0;
+	height: 60%;
+	margin: 0;
+}
+.mui-content .detail-mission-deathline{
+	background-color: #F7F7F7;
+	border-radius: 0;
+	border: 0;
+	margin-top: .5rem;
+	border-bottom: 1px solid #EEEEEE;
+	height: 2.8rem;
+	color: #777777;
+	font-size: .95rem;
+}
+.mui-content .btncomplete{
+	margin-top: 4%;
+	width: 96%;
+	margin-left: 2%;  
+	height: 2.8rem;
+	background: #3AB3FF;
+	color: white;
+	font-size: 1rem;
+	border: 0;
+}
+.mui-content .finish{
+	background:#CCCCCC
+}
+.tip{
+	margin: 0;
+	font-size: .7rem;
+	line-height: .1rem;
+	height: .1rem;
+	text-align: center;
+}

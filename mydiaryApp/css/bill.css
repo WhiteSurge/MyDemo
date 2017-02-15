@@ -1,0 +1,112 @@
+/*账单顶部*/
+.bill-title{
+	width: 100%;
+	height: 7rem;
+	background: #007AFF;
+	color: white;
+}
+.bill-title-date{
+	width: 100%;
+	text-align: center;
+	color: white;
+	font-size: .9rem;
+	padding-top: 1rem;
+}
+.bill-title-date .bill-title-month{
+	font-size: 1.6rem;
+	margin: 0 .5rem;
+}
+.bill-title ul{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+.bill-title li{
+	flex: 1;
+	flex-direction: row;
+	text-align: center;
+	list-style: none;
+	height: 2.5rem;
+}
+.bill-month-in{
+	border-right: 2px solid white;
+}
+.bill-month-text{
+	font-size: .8rem;
+	line-height: 1.4rem;
+}
+.bill-title .moneysum {
+	color: white;
+	font-size: 1rem;
+}
+/*账单内容*/
+.bill-today-title{
+	width: 100%;
+	height: 1.5rem;
+	font-size: .7rem;
+	line-height: 1.5rem;
+	padding: 0 1rem;
+	color: #6D6D72;
+	position: relative;
+	background: #E9E9E9;
+}
+.bill-tody-money{
+	position: absolute;
+	right: 1rem;
+	top: 0;
+}
+.bill-tody-money span{
+	margin-left: 1rem;
+}
+.bill-tody-money i{
+	font-style: normal;
+}
+/*账单卡片*/
+.bill-card{
+	width: 100%;
+	height: 4rem;
+	background: white;
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: row;
+	letter-spacing: .05rem;
+	border-top: 1px solid #DDDDDD;
+}
+.bill-logo{
+	line-height: 4rem;
+	color: skyblue;
+	flex: 1;
+	float: left;
+	margin-left: .5rem;
+}
+.bill-card-text{
+	flex: 5;
+	height: 4rem;
+	padding-top: .5rem;
+}
+.bill-name{
+	flex: 1;
+	color: black;
+	font-size: 1rem;
+	line-height: 1.8rem;
+}
+.bill-name-only{
+	line-height: 3;
+}
+.bill-tip{
+	font-size: .75rem;
+	line-height: 1rem;
+	width: 10.5rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	color: #AAAAAA;
+}
+.bill-money{
+	flex: 1;
+	float: left;
+	line-height: 4rem;
+	font-size: 1.2rem;
+	text-align: right;
+}

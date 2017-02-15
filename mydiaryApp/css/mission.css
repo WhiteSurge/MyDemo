@@ -1,0 +1,63 @@
+/*任务卡样式*/
+.mission-card{
+	margin: 5%;
+	padding: .9rem;
+	background: #FFFFFF;
+	width: 90%;
+	height: 7.5rem;
+	border-radius: .3rem;
+	box-shadow: .05rem .1rem .05rem .1rem #DDDDDD;
+	position: relative;
+}
+.mission-card p{
+	margin: 0;
+	font-size: .8rem;
+}
+.mission-card img{
+	width: 100px;
+	position: absolute;
+	top: 1rem;
+	left: 50%;
+	margin-left: -50px;
+	display: none;
+}
+.mission-card .mission-time{
+	color: #007AFF;
+	letter-spacing: .04rem;
+}
+.mission-card .mission-title{
+	color: black;
+	font-size: 1rem;
+	margin-left: .3rem;
+	letter-spacing: .05rem;
+	line-height: 2rem;
+	font-family: "微软雅黑";
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.mission-card .mission-detail_message{
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-left: .3rem;
+}
+.mission-card .mission-remind_time{
+	position: absolute;
+	right: 1rem;
+	bottom: .7rem;
+	color: #8A6DE9;
+}
+/*任务完成*/
+.mission-complete{
+	background: #e1e1e1;
+	box-shadow: 0 0 0 0;
+}
+.mission-complete .mission-time,.mission-complete .mission-title,.mission-complete .mission-remind_time{
+	color: #8F8F94;
+}
+.mission-complete img{
+	display: block;
+}

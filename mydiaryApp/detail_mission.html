@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/detail_mission.css" />
+		<link rel="stylesheet" href="css/iconfont.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">日程任务</h1>
+		    <a href="#sheet1" class="gengduo iconfont icon-gengduo mui-pull-right"></a>
+		</header>
+		
+		<div class="mui-content">
+		    <input type="text" disabled="disabled" placeholder="任务标题" class="detail-mission-title" id="new-mission-title"/>
+		    <textarea disabled="disabled" placeholder="任务内容..." class="detail-mission-content" id="new-mission-content"></textarea>
+		    <input type="text" disabled="disabled" placeholder="截止时间" class="detail-mission-deathline" id="new-mission-deathline"/>
+			<p class="tip" id="tip">tips : 如果任务完成了就点击下方的按钮标记一下吧~</p>
+			<input type="button" value="未完成" class="btncomplete" id="btncomplete"/>
+		</div>
+		
+		<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+		    <!-- 可选择菜单 -->
+		    <ul class="mui-table-view">
+		      <li class="mui-table-view-cell">
+		        <a href="#sheet1" id="btnchange">编辑内容</a>
+		      </li>
+		      <li class="mui-table-view-cell">
+		        <a href="#sheet1" style="color: red;" id="btndelete">删除任务</a>
+		      </li>
+		    </ul>
+		    <!-- 取消菜单 -->
+		    <ul class="mui-table-view">
+		      <li class="mui-table-view-cell">
+		        <a href="#sheet1"><b>取消</b></a>
+		      </li>
+		    </ul>
+		</div>
+		
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack:true, //启用右滑关闭功能
+			});
+			
+			var mission = JSON.parse(localStorage.getItem("mission"));
+			var thisNum = "";
+			//将内容加载显示出来
+			mui.plusReady(function() {  
+                var self = plus.webview.currentWebview();  
+				thisNum = self.num;
+				$("#new-mission-title").val(mission[thisNum].title);
+				$("#new-mission-content").val(mission[thisNum].content);
+				$("#new-mission-deathline").val("截止时间： "+mission[thisNum].deathline+"  "+mission[thisNum].remindtime);
+            	
+            	if(mission[thisNum].complete){
+	            	$("#btncomplete").val("已完成");
+	            	$("#btncomplete").addClass("finish");
+	            	$("#tip").html("tips : 如果任务还未完成，点击下方的按钮可以取消标记哦~")
+            	}
+			});
+            //删除任务
+            var del = document.getElementById("btndelete");
+            del.addEventListener("tap",function(){
+            	mission.splice(thisNum,1);
+            	localStorage.setItem("mission",JSON.stringify(mission));
+				mui.back();
+				mui.back();
+				mui.toast('任务已删除',{ duration:'long', type:'div' });
+				//返回主页后重新加载页面
+				var wobj = plus.webview.getWebviewById("mission.html");
+				wobj.reload(true);
+            })
+            //编辑任务
+            var change = document.getElementById("btnchange");
+            change.addEventListener("tap",function(){
+            	mui.openWindow({
+					url: 'change_mission.html', 
+					id:'change_mission',
+					waiting:{
+						autoShow:false
+					},
+					extras:{
+						num:thisNum
+					}
+				});
+            })
+            //任务标记为已完成
+            var finish = document.getElementById("btncomplete");
+            finish.addEventListener("tap",function(){
+            	//为未完成的任务修改属性 complete = true
+            	//为已完成的任务修改属性 complete = false
+            	if(mission[thisNum].complete){
+            		mission[thisNum].complete = false;
+	            	localStorage.setItem("mission",JSON.stringify(mission));
+	            	$("#btncomplete").val("未完成");
+	            	$("#btncomplete").removeClass("finish");
+	            	mui.back();
+	            	mui.toast('任务完成状态已修改',{ duration:'long', type:'div' });
+            	} else {
+	            	mission[thisNum].complete = true;
+	            	localStorage.setItem("mission",JSON.stringify(mission));
+	            	$("#btncomplete").val("已完成");
+	            	$("#btncomplete").addClass("finish");
+	            	mui.back();
+	            	mui.toast('任务已完成！',{ duration:'long', type:'div' });
+            	}
+            	
+				//返回主页后重新加载页面
+				var wobj = plus.webview.getWebviewById("mission.html");
+				wobj.reload(true);
+            })
+			
+		</script>
+	</body>
+
+</html>
